@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import Routes from 'Routes';
+import { withTheme } from 'emotion-theming';
+import { theme, ThemeProvider, CSSReset, ColorModeProvider } from '@chakra-ui/core';
+
+import myTheme from 'theme';
+
+const customTheme = {
+  ...theme,
+  ...myTheme,
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={customTheme}>
+      <CSSReset />
+      <ColorModeProvider>
+        <Routes />
+      </ColorModeProvider>
+    </ThemeProvider>
   );
 }
 
-export default App;
+export default connect((state: Object) => state)(withTheme(App));
