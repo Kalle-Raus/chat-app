@@ -22,8 +22,6 @@ export const Container = ({ children, ...rest }: Props) => {
       color={color[colorMode]}
       justifyContent="center"
       flexGrow={1}
-      pt={[0, 24]}
-      pb={[4, 12]}
       {...rest}
     >
       {children}

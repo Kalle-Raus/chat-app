@@ -29,6 +29,12 @@ const Routes = () => {
       private: false,
       exact: true,
     },
+    {
+      path: `${PATHS.trades}/:id`,
+      component: './pages/Trades',
+      private: false,
+      exact: true,
+    },
   ];
 
   return (

@@ -7,7 +7,7 @@ type Props = {
 
 export default function Layout(props: Props) {
   return (
-    <Container pt="10" pb="20" minHeight="100vh" justifyContent={['flex-start', 'center']}>
+    <Container minHeight="100vh" justifyContent={['flex-start']}>
       {props.children}
     </Container>
   );
