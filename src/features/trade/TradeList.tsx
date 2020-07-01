@@ -7,7 +7,7 @@ import TradeItem from './TradeItem';
 import { PATHS } from 'app.constants';
 import { selectUserEntities } from 'features/user/userSlice';
 
-export default function TradeList({ id, trades }: any) {
+export default function TradeList({ display, id, trades }: any) {
   const users: any = useSelector(selectUserEntities);
 
   return (
@@ -17,6 +17,7 @@ export default function TradeList({ id, trades }: any) {
       flexDirection="column"
       boxShadow="0px 0px 15px 0px lightgray"
       w={['100%', '27em']}
+      display={display}
     >
       {trades?.map((trade: any, key: number) => (
         <Link to={`${PATHS.trades}/${trade.id}`} key={key}>

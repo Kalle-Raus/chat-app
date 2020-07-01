@@ -1,12 +1,14 @@
 import { MESSAGES } from 'app.constants';
 
-const messageApi = {
-  getAll: async () =>
-    new Promise((resolve) => {
-      resolve({
-        data: MESSAGES,
+const messageApi: any = {
+  messages: {
+    async update(data: any) {
+      return new Promise((resolve) => {
+        const response = [...MESSAGES, ...data];
+        resolve(response);
       });
-    }),
+    },
+  },
 };
 
 export default messageApi;

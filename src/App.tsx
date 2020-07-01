@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Routes from 'Routes';
 import { withTheme } from 'emotion-theming';
 import { theme, ThemeProvider, CSSReset, ColorModeProvider } from '@chakra-ui/core';
+import './App.css';
 
 import myTheme from 'theme';
 

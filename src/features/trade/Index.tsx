@@ -6,46 +6,62 @@ import { Button, Flex } from '@chakra-ui/core';
 import TradeList from './TradeList';
 import TradeMessages from './TradeMessages';
 import TradeDetails from './TradeDetails';
-import { fetchTrade, fetchTrades, selectAllTrades, updateTrade } from './tradesSlice';
+import {
+  fetchTrade,
+  fetchTrades,
+  selectAllTrades,
+  updateTrade,
+  selectTradeById,
+} from './tradesSlice';
+
+function FetchTrades() {
+  const dispatch = useDispatch();
+
+  return (
+    <Flex
+      background="white"
+      flexWrap="wrap"
+      flexDirection="column"
+      boxShadow="0px 0px 15px 0px lightgray"
+      w={['100%', '27em']}
+    >
+      <Button
+        onClick={() => dispatch(fetchTrades())}
+        size="lg"
+        m={8}
+        color="white"
+        backgroundColor="green.300"
+        borderRadius={50}
+      >
+        Fetch trades
+      </Button>
+    </Flex>
+  );
+}
 
 export default function Trades() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const trades: any = useSelector(selectAllTrades);
+  const trade: any = useSelector((state) => selectTradeById(state, id));
 
   React.useEffect(() => {
     dispatch(fetchTrade(id));
-    dispatch(updateTrade({ id, seen: true }));
+    dispatch(updateTrade({ ...trade, seen: true }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, id]);
 
   return (
     <Flex flexWrap="wrap" flexDirection="row" justifyContent="space-between" flex="auto" w="100%">
       {trades.length ? (
-        <TradeList id={id} trades={trades} />
+        <TradeList display={id ? ['none', 'flex'] : 'flex'} id={id} trades={trades} />
       ) : (
-        <Flex
-          background="white"
-          flexWrap="wrap"
-          flexDirection="column"
-          boxShadow="0px 0px 15px 0px lightgray"
-          w={['100%', '27em']}
-        >
-          <Button
-            onClick={() => dispatch(fetchTrades())}
-            size="lg"
-            m={8}
-            color="white"
-            backgroundColor="green.300"
-            borderRadius={50}
-          >
-            Fetch trades
-          </Button>
-        </Flex>
+        <FetchTrades />
       )}
       {id ? (
         <>
-          <TradeMessages id={id} />
-          <TradeDetails id={id} />
+          <TradeMessages id={id} trade={trade} trades={trades} />
+          <TradeDetails id={id} display={id ? ['none', 'block'] : 'block'} />
         </>
       ) : (
         <></>

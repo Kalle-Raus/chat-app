@@ -5,12 +5,12 @@ import { Avatar, Box, Button, Text } from '@chakra-ui/core';
 import { selectTradeById, selectUserByTradeId } from 'features/trade/tradesSlice';
 import Loader from 'components/Loader';
 
-export default function TradeDetails({ id }: any) {
+export default function TradeDetails({ display, id }: any) {
   const tradesLoading = useSelector((state: any) => state.trades.loading);
   const trade: any = useSelector((state) => selectTradeById(state, id));
   const user: any = useSelector(selectUserByTradeId(id, false));
 
-  if (tradesLoading) return <Loader />;
+  // if (tradesLoading) return <Loader />;
 
   return (
     <Box
@@ -19,6 +19,7 @@ export default function TradeDetails({ id }: any) {
       boxShadow="0px 0px 15px 0px lightgray"
       textAlign="center"
       w={['100%', '27em']}
+      display={display}
     >
       <Box mt={4} mb={8}>
         <Text color="gray.700" fontSize="2xl">
@@ -27,9 +28,10 @@ export default function TradeDetails({ id }: any) {
         <Text color="gray.300">Started 23 minutes ago</Text>
       </Box>
       <Button
-        bg="green.300"
+        // bg="green.300"
         boxShadow="0 0 3px 0 lightgray"
-        color="white"
+        // color="white"
+        variantColor="green"
         fontSize="xl"
         fontWeight="400"
         borderRadius={50}

@@ -49,7 +49,6 @@ export const updateTrade: any = createAsyncThunk(
   async (data: any, { rejectWithValue }) => {
     try {
       const response: any = await tradeApi.trades.update(data);
-
       const normalized = normalize(response, tradeEntity);
       return normalized.entities;
     } catch (err) {
@@ -63,8 +62,6 @@ export const removeTrade: any = createAsyncThunk(
   async (id: string, { rejectWithValue }) => {
     try {
       const response: any = await tradeApi.trades.remove(id);
-      // const normalized = normalize(response, tradeEntity);
-      // return normalized.entities;
       return response;
     } catch (err) {
       return rejectWithValue(err?.response?.data || 'Something went wrong!');
@@ -169,8 +166,8 @@ export const selectMessagesByTradeId = (tradeId: any) =>
     }
   );
 
-export const selectUserByTradeId = (tradeId: any, seller: boolean) => {
-  const userType = seller === true ? 'seller' : 'buyer';
+export const selectUserByTradeId = (tradeId: any, me: boolean) => {
+  const userType = me === true ? 'seller' : 'buyer';
   return createSelector(
     [
       (state: any) => selectTradeById(state, tradeId),

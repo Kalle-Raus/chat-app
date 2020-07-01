@@ -1,16 +1,3 @@
-// import { TRADES } from 'app.constants';
-
-// const tradeApi = {
-//   getAll: async () =>
-//     new Promise((resolve) => {
-//       resolve({
-//         data: TRADES,
-//       });
-//     }),
-// };
-
-// export default tradeApi;
-
 const API_URI = '/fakeApi';
 
 // Fake API
