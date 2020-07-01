@@ -19,7 +19,7 @@ const Routes = () => {
   const routes = [
     {
       path: PATHS.index,
-      component: './pages/Index',
+      component: './pages/Trades',
       private: false,
       exact: true,
     },

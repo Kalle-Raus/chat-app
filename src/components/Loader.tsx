@@ -1,10 +1,10 @@
 import React from 'react';
 import { Skeleton } from '@chakra-ui/core';
 
-export default function Loader() {
+export default function Loader(props: any) {
   return (
     <>
-      <Skeleton h="sm" minW={['full', 'xs', 'md']} />
+      <Skeleton m={2} minW={['full', 'xs', 'md']} {...props} />
     </>
   );
 }

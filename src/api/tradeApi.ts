@@ -26,6 +26,21 @@ const tradeApi = {
       });
       return result.json();
     },
+    async update(data: any) {
+      const result = await fetch(`${API_URI}/trades/${data.id}`, {
+        method: 'GET',
+      });
+      const json = await result.json();
+      const update = { ...json, ...data };
+
+      return update;
+    },
+    async remove(id: string) {
+      const result = await fetch(`${API_URI}/trades/${id}`, {
+        method: 'GET',
+      });
+      return result.json();
+    },
   },
   users: {},
 };

@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { fetchTrade } from 'features/trade/tradesSlice';
+import { fetchTrades } from 'features/trade/tradesSlice';
 
 const userAdapter = createEntityAdapter();
 
@@ -12,7 +12,7 @@ export const userSlice: any = createSlice({
     reset: (state) => (state = initialState),
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchTrade.fulfilled, (state, action) => {
+    builder.addCase(fetchTrades.fulfilled, (state, action) => {
       userAdapter.upsertMany(state, action.payload.users || {});
     });
   },

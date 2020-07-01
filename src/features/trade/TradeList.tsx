@@ -4,25 +4,23 @@ import { useSelector } from 'react-redux';
 import { Flex } from '@chakra-ui/core';
 
 import TradeItem from './TradeItem';
-import Loader from 'components/Loader';
 import { PATHS } from 'app.constants';
+import { selectUserEntities } from 'features/user/userSlice';
 
-export default function TradeList({ trades }: any) {
-  const tradesLoading = useSelector((state: any) => state.trades.loading);
-
-  if (tradesLoading) return <Loader />;
+export default function TradeList({ id, trades }: any) {
+  const users: any = useSelector(selectUserEntities);
 
   return (
     <Flex
       background="white"
       flexWrap="wrap"
       flexDirection="column"
-      boxShadow="0px 0px 15px 0px lightgrey"
-      minW="320px"
+      boxShadow="0px 0px 15px 0px lightgray"
+      w={['100%', '27em']}
     >
       {trades?.map((trade: any, key: number) => (
         <Link to={`${PATHS.trades}/${trade.id}`} key={key}>
-          <TradeItem trade={trade} />
+          <TradeItem trade={trade} user={users[trade.buyer]} selected={id === trade.id} />
         </Link>
       ))}
     </Flex>
