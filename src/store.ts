@@ -20,4 +20,6 @@ store.subscribe(
   }, 1000)
 );
 
+export type AppDispatch = typeof store.dispatch;
+
 export { store };

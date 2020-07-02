@@ -7,7 +7,13 @@ import TradeItem from './TradeItem';
 import { PATHS } from 'app.constants';
 import { selectUserEntities } from 'features/user/userSlice';
 
-export default function TradeList({ display, id, trades }: any) {
+export interface TradeListProps {
+  display: object | string;
+  id: string;
+  trades: object[];
+}
+
+export default function TradeList({ display, id, trades }: TradeListProps) {
   const users: any = useSelector(selectUserEntities);
 
   return (

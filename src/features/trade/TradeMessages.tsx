@@ -15,7 +15,6 @@ import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { animateScroll } from 'react-scroll';
 
-import Loader from 'components/Loader';
 import {
   selectMessagesByTradeId,
   selectTradeById,
@@ -27,7 +26,13 @@ import { selectUserEntities } from 'features/user/userSlice';
 import TimeStamp from 'features/trade/TimeStamp';
 import { updateMessage } from 'features/message/messageSlice';
 
-function MessageInput({ user, trade, messages }: any) {
+export interface MessageInputProps {
+  user: any;
+  trade: any;
+  messages: Array<Object>;
+}
+
+function MessageInput({ user, trade, messages }: MessageInputProps) {
   const dispatch = useDispatch();
   const { handleSubmit, errors, register, formState } = useForm();
 
@@ -67,7 +72,7 @@ function MessageInput({ user, trade, messages }: any) {
         p={2}
         pl={[0, 8]}
         pr={[0, 4]}
-        my={[2, 6]}
+        my={[2, 2]}
         zIndex={1}
       >
         <FormControl isInvalid={errors.name} flexGrow={1}>
@@ -98,11 +103,15 @@ function MessageInput({ user, trade, messages }: any) {
   );
 }
 
-export default function TradeMessages({ id }: any) {
+export interface TradeMessagesProps {
+  id: string;
+  setTradeDetailsVisible: Function;
+}
+
+export default function TradeMessages({ id, setTradeDetailsVisible }: TradeMessagesProps) {
   const [me, setMe] = React.useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
-  const tradesLoading = useSelector((state: any) => state.trades.loading);
   const trade: any = useSelector((state) => selectTradeById(state, id));
   const currentUser: any = useSelector(selectUserByTradeId(id, me));
   const user: any = useSelector(selectUserByTradeId(id, false));
@@ -117,12 +126,54 @@ export default function TradeMessages({ id }: any) {
 
   useEffect(scrollToBottom, [messages]);
 
-  // if (tradesLoading) return <Loader />;
-
   return (
-    <Flex flexWrap="wrap" flexDirection="column" flexGrow={1} m={[4, 8]}>
+    <Flex flexWrap="wrap" flexDirection="column" flexGrow={1} m={[4, 8]} mb={[4, 4]}>
+      <Flex display={['inherit', 'none']} flexDirection="row">
+        <Box flexGrow={1}>
+          <IconButton
+            aria-label="Delete trade"
+            icon="delete"
+            isRound={true}
+            bg="gray.200"
+            color="white"
+            size="lg"
+            onClick={() => {
+              dispatch(removeTrade(id));
+              history.push('/trades');
+            }}
+          />
+        </Box>
+        <IconButton
+          display={['inherit', 'none']}
+          aria-label="Show trade details"
+          icon="info-outline"
+          isRound={true}
+          bg="gray.200"
+          color="white"
+          size="lg"
+          fontSize={24}
+          onClick={() => {
+            setTradeDetailsVisible(true);
+          }}
+        />
+        <IconButton
+          display={['inherit', 'none']}
+          aria-label="Delete trade"
+          icon="chevron-left"
+          isRound={true}
+          bg="gray.200"
+          color="white"
+          size="lg"
+          fontSize={32}
+          onClick={() => {
+            history.push('/trades');
+          }}
+          ml={2}
+        />
+      </Flex>
       <Flex flexWrap="wrap" flexDirection="row" justifyContent="center" position="relative">
         <IconButton
+          display={['none', 'inherit']}
           aria-label="Delete trade"
           icon="delete"
           isRound={true}
@@ -137,28 +188,12 @@ export default function TradeMessages({ id }: any) {
             history.push('/trades');
           }}
         />
-        <Text color="gray.700" fontSize="2xl">
+        <Text color="gray.700" fontSize={['xl', '2xl']}>
           {trade.method}
         </Text>
-        <IconButton
-          display={['inherit', 'none']}
-          aria-label="Delete trade"
-          icon="chevron-left"
-          isRound={true}
-          bg="gray.200"
-          color="white"
-          size="lg"
-          fontSize={32}
-          position="absolute"
-          right={0}
-          top={2}
-          onClick={() => {
-            history.push('/trades');
-          }}
-        />
       </Flex>
-      <Box textAlign="center" m={4}>
-        <Text color="gray.300" fontSize="xl" fontWeight="500">
+      <Box textAlign="center" m={[1, 4]}>
+        <Text color="gray.300" fontSize={['md', 'xl']} fontWeight="500">
           {user.userName}{' '}
           <Text as="span" color="green.400">
             +{user?.ratings?.positive}
@@ -220,13 +255,22 @@ export default function TradeMessages({ id }: any) {
         })}
       </Box>
       <Divider flexGrow={1} visibility="hidden" />
-      <Flex justify="flex-start" align="center">
+      <Flex
+        justify="flex-start"
+        flexDirection="column"
+        position={['fixed', 'inherit']}
+        bottom={0}
+        left={0}
+        m={[2, 0]}
+        w="calc(100% - 16px)"
+      >
         <Button
           onClick={() => setMe(!me)}
-          variant="outline"
+          bg="gray.50"
           h={16}
           borderWidth={2}
           borderRadius={50}
+          maxW={220}
         >
           <Avatar
             name={currentUser?.userName}
@@ -237,8 +281,8 @@ export default function TradeMessages({ id }: any) {
           />
           Typing as {currentUser?.userName}
         </Button>
+        <MessageInput user={currentUser} trade={trade} messages={messages} />
       </Flex>
-      <MessageInput user={currentUser} trade={trade} messages={messages} />
     </Flex>
   );
 }

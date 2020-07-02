@@ -1,7 +1,7 @@
 import { theme } from '@chakra-ui/core';
 
 export default {
-  breakpoints: ['30em', '48em', '62em', '80em'],
+  breakpoints: ['80em', '96em', '112em', '128em'],
   colors: {
     ...theme.colors,
     gray: {

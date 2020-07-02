@@ -7,10 +7,14 @@ import history from 'customHistory';
 import Layout from 'components/Layout';
 import Loader from 'components/Loader';
 
-const LoadableComponent = loadable(({ url }: any) => import(`${url}`), {
+export interface LoadableComponentProps {
+  url: string;
+}
+
+const LoadableComponent = loadable(({ url }: LoadableComponentProps) => import(`${url}`), {
   fallback: (
     <Layout>
-      <Loader />
+      <Loader> </Loader>
     </Layout>
   ),
 });

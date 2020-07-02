@@ -1,7 +1,13 @@
 import React from 'react';
 import { Avatar, Box, Flex, Text } from '@chakra-ui/core';
 
-export default function TradeItem({ trade, user, selected }: any) {
+export interface TradeItemProps {
+  trade: any;
+  user: any;
+  selected: boolean;
+}
+
+export default function TradeItem({ trade, user, selected }: TradeItemProps) {
   return (
     <Box
       backgroundColor={selected ? 'gray.50' : 'none'}
@@ -36,7 +42,8 @@ export default function TradeItem({ trade, user, selected }: any) {
           <Text color={selected ? 'gray.700' : 'gray.300'}>
             {`${trade.amount}`}{' '}
             <span style={{ textTransform: 'uppercase' }}>{`${trade.currency}`}</span> (
-            {`${trade.amount / 10000}`} <span style={{ textTransform: 'uppercase' }}>{`BTC`}</span>)
+            {`${(trade.amount / 9200).toPrecision(5)}`}{' '}
+            <span style={{ textTransform: 'uppercase' }}>{`BTC`}</span>)
           </Text>
         </Box>
         <Flex flexDirection="column" alignItems="center" justifyContent="center" minW="70px">

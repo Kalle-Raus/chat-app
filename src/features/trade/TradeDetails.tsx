@@ -1,16 +1,24 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Avatar, Box, Button, Text } from '@chakra-ui/core';
+import { Avatar, Box, Button, Text, Flex, IconButton } from '@chakra-ui/core';
 
 import { selectTradeById, selectUserByTradeId } from 'features/trade/tradesSlice';
-import Loader from 'components/Loader';
 
-export default function TradeDetails({ display, id }: any) {
-  const tradesLoading = useSelector((state: any) => state.trades.loading);
+export interface Props {
+  display: any;
+  id: string;
+  tradeDetailsVisible: boolean;
+  setTradeDetailsVisible: Function;
+}
+
+export default function TradeDetails({
+  display,
+  id,
+  tradeDetailsVisible,
+  setTradeDetailsVisible,
+}: Props) {
   const trade: any = useSelector((state) => selectTradeById(state, id));
   const user: any = useSelector(selectUserByTradeId(id, false));
-
-  // if (tradesLoading) return <Loader />;
 
   return (
     <Box
@@ -19,13 +27,33 @@ export default function TradeDetails({ display, id }: any) {
       boxShadow="0px 0px 15px 0px lightgray"
       textAlign="center"
       w={['100%', '27em']}
-      display={display}
+      display={tradeDetailsVisible ? 'block' : display}
+      zIndex={2}
+      position={tradeDetailsVisible ? ['fixed', 'inherit'] : 'inherit'}
+      top={0}
+      left={0}
+      h={['100vh', 'auto']}
     >
+      <Flex flexWrap="wrap" w="100%" justifyContent="flex-end">
+        <IconButton
+          display={['inherit', 'none']}
+          aria-label="Show trade details"
+          icon="close"
+          isRound={true}
+          bg="gray.200"
+          color="white"
+          size="lg"
+          fontSize={16}
+          onClick={() => {
+            setTradeDetailsVisible(false);
+          }}
+        />
+      </Flex>
       <Box mt={4} mb={8}>
         <Text color="gray.700" fontSize="2xl">
           You are trading with <span style={{ fontWeight: 500 }}>{user.userName}</span>
         </Text>
-        <Text color="gray.300">Started 23 minutes ago</Text>
+        <Text color="gray.300">Started 34 minutes ago</Text>
       </Box>
       <Button
         // bg="green.300"
@@ -104,7 +132,7 @@ export default function TradeDetails({ display, id }: any) {
           <Text fontWeight="500" textTransform="uppercase">
             Amount BTC
           </Text>
-          <Text color="gray.300">{trade.amount / 10000}</Text>
+          <Text color="gray.300">{(trade.amount / 9200).toPrecision(5)}</Text>
         </Box>
       </Box>
     </Box>

@@ -38,6 +38,7 @@ export const TRADES = [
   {
     id: '1',
     img: 'man_avatar.png',
+    timeStamp: '2020-06-30T09:19:14.180Z',
     buyer: {
       id: '1',
       userName: 'John',
@@ -106,6 +107,7 @@ export const TRADES = [
   },
   {
     id: '2',
+    timeStamp: '2020-06-30T09:19:15.180Z',
     buyer: {
       id: '1',
       img: 'man_avatar.png',
@@ -175,6 +177,7 @@ export const TRADES = [
   },
   {
     id: '3',
+    timeStamp: '2020-06-30T09:19:24.180Z',
     buyer: {
       id: '1',
       userName: 'John',

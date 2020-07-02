@@ -3,11 +3,11 @@ import { Flex, useColorMode, FlexProps } from '@chakra-ui/core';
 
 type Children = React.ReactNode;
 
-type Props = {
+type ContainerProps = {
   [name: string]: FlexProps | Children;
 };
 
-export const Container = ({ children, ...rest }: Props) => {
+export const Container = ({ children, ...rest }: ContainerProps) => {
   const { colorMode } = useColorMode();
 
   const bgColor = { light: 'gray.50', dark: 'gray.900' };

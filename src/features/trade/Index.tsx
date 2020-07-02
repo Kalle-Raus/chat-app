@@ -44,6 +44,7 @@ export default function Trades() {
   const dispatch = useDispatch();
   const trades: any = useSelector(selectAllTrades);
   const trade: any = useSelector((state) => selectTradeById(state, id));
+  const [tradeDetailsVisible, setTradeDetailsVisible] = React.useState(false);
 
   React.useEffect(() => {
     dispatch(fetchTrade(id));
@@ -60,8 +61,13 @@ export default function Trades() {
       )}
       {id ? (
         <>
-          <TradeMessages id={id} trade={trade} trades={trades} />
-          <TradeDetails id={id} display={id ? ['none', 'block'] : 'block'} />
+          <TradeMessages id={id} setTradeDetailsVisible={setTradeDetailsVisible} />
+          <TradeDetails
+            id={id}
+            display={id ? ['none', 'block'] : 'block'}
+            tradeDetailsVisible={tradeDetailsVisible}
+            setTradeDetailsVisible={setTradeDetailsVisible}
+          />
         </>
       ) : (
         <></>
