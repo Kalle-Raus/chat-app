@@ -47,6 +47,9 @@ export default function Trades() {
   const [tradeDetailsVisible, setTradeDetailsVisible] = React.useState(false);
 
   React.useEffect(() => {
+    if (!trades.length) {
+      dispatch(fetchTrades());
+    }
     dispatch(fetchTrade(id));
     dispatch(updateTrade({ ...trade, seen: true }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
